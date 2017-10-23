@@ -17,6 +17,13 @@ install () {
   echo "and create a symlink in $symlink"
   echo ""
 
+  # Detect if running in a TTY
+  if [ -t 0 ]; then
+    echo "Press CRTL+C to cancel installation now, or wait a few seconds to continue..."
+    sleep 6
+    echo ""
+  fi
+
   # Start with a clean slate
   uninstall
 
