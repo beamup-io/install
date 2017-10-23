@@ -1,3 +1,62 @@
 #!/bin/bash
 
-echo "Hello, Joe."
+set -e
+
+beamup_dir=~/.beamup
+symlink=/usr/local/bin/beamup
+
+
+# Run everything inside a function to avoid creating
+# a mess if the download fails halfway through.
+install () {
+  echo ""
+  echo "Hello, this is the BeamUp Installer"
+  echo ""
+  echo "This script will first remove everything in $beamup_dir"
+  echo "then install a fresh clone of the beamup/cli repo to $beamup_dir/cli"
+  echo "and create a symlink in $symlink"
+  echo ""
+
+  if tty -s; then
+    echo "Hit Ctrl+C to CANCEL now, or wait a few seconds to continue..."
+    echo ""
+
+    sleep 6
+  fi
+
+  # Start with a clean slate
+  uninstall
+
+  mkdir -p $beamup_dir/cli
+  git clone https://github.com/beamup-io/cli $beamup_dir/cli
+  chmod +x $beamup_dir/cli/beamup
+  ln -s "$beamup_dir/cli/beamup" "$symlink"
+
+  echo ""
+  echo "Running \"beamup selftest\""
+  echo ""
+
+  beamup selftest
+}
+
+uninstall() {
+  if [ -L "$symlink" ]; then
+    echo "Removing $symlink"
+    rm $symlink
+  fi
+
+  if [ -d "$beamup_dir" ]; then
+    echo "Removing $beamup_dir"
+    rm -rf $beamup_dir
+  fi
+}
+
+cli_command=$1
+case $cli_command in
+  uninstall)
+    uninstall
+    ;;
+  *)
+    install
+    ;;
+esac
