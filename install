@@ -10,19 +10,12 @@ symlink=/usr/local/bin/beamup
 # a mess if the download fails halfway through.
 install () {
   echo ""
-  echo "Hello, this is the BeamUp Installer"
+  echo "Hello, this is the BeamUp installer."
   echo ""
   echo "This script will first remove everything in $beamup_dir"
   echo "then install a fresh clone of the beamup/cli repo to $beamup_dir/cli"
   echo "and create a symlink in $symlink"
   echo ""
-
-  if tty -s; then
-    echo "Hit Ctrl+C to CANCEL now, or wait a few seconds to continue..."
-    echo ""
-
-    sleep 6
-  fi
 
   # Start with a clean slate
   uninstall
