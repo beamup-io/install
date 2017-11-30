@@ -42,7 +42,7 @@ install () {
 path_fallback () {
   echo "Could not create symlink - don't worry, you can still use"
   echo "BeamUp by adding this line to your ~/.bashrc file:"
-  echo '  export PATH="$beamup_dir/cli:$PATH"'
+  echo "  export PATH=\"$beamup_dir/cli:\$PATH\""
 }
 
 uninstall() {
