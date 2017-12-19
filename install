@@ -37,9 +37,14 @@ install () {
   echo ""
 
   beamup selftest
+
+  echo "DEBUG: Running selftest once more"
+  beamup selftest
+  beamup echo "Hello from installer"
 }
 
 path_fallback () {
+  echo ""
   echo "Could not create symlink - don't worry, you can still use"
   echo "BeamUp by adding this line to your ~/.bashrc file:"
   echo "  export PATH=\"$beamup_dir/cli:\$PATH\""
